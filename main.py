@@ -6,7 +6,7 @@ from kivy.app import App
 from kivy.base import EventLoop
 from kivy.config import Config
 
-from game import Game
+from void_gun.game import Game
 
 
 class KivyApp(App):
