@@ -25,4 +25,8 @@ if __name__ == '__main__':
     from kivy.core.window import Window
     Window.clearcolor = utils.get_color_from_hex('#242424')
 
-    KivyApp().run()
+    app = KivyApp()
+    app.load_config()
+    app.root = app.build()
+    app.built = True
+    app.run()
