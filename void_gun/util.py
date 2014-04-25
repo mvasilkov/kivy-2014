@@ -19,4 +19,4 @@ def load_tex_uv(atlas_name):
         res[name] = (x1 / tex_width, 1 - y1 / tex_height,
                      x2 / tex_width, 1 - y2 / tex_height) + tuple(val[2:])
 
-    return res
+    return tex, res

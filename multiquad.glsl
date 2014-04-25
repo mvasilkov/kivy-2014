@@ -6,10 +6,10 @@ precision highp float;
 varying   vec4  frag_color;
 varying   vec2  tex_coord0;
 
+attribute vec2  vCenter;
+attribute float vRotation;
 attribute vec2  vPosition;
 attribute vec2  vTexCoords0;
-attribute float vRotation;
-attribute vec2  vCenter;
 
 uniform   mat4  modelview_mat;
 uniform   mat4  projection_mat;
