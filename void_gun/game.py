@@ -20,6 +20,8 @@ class Game(Widget):
         self.vertex_format = (
             ('vCenter', 2, 'float'),
             ('vRotation', 1, 'float'),
+            ('vScale', 1, 'float'),
+            ('vOpacity', 1, 'float'),
             ('vPosition', 2, 'float'),
             ('vTexCoords0', 2, 'float'),
         )
@@ -36,6 +38,7 @@ class Game(Widget):
         width, height = self.size
         tex_list = self.tex_uv.keys()
         objects = [(rand() * width, rand() * height, rand() * math.pi * 2,
+                    rand() + 0.5, rand(),
                     randc(tex_list)) for c in xrange(count)]
         self.render(objects)
 
@@ -47,13 +50,13 @@ class Game(Widget):
 
         vertices = []
         vx = vertices.extend
-        for obj in objects:
-            uv = self.tex_uv[obj[3]]
+        for o in objects:
+            uv = self.tex_uv[o[5]]
             vx((
-                obj[0], obj[1], obj[2], -uv[4], -uv[5], uv[0], uv[1],
-                obj[0], obj[1], obj[2],  uv[4], -uv[5], uv[2], uv[1],
-                obj[0], obj[1], obj[2],  uv[4],  uv[5], uv[2], uv[3],
-                obj[0], obj[1], obj[2], -uv[4],  uv[5], uv[0], uv[3],
+                o[0], o[1], o[2], o[3], o[4], -uv[4], -uv[5], uv[0], uv[1],
+                o[0], o[1], o[2], o[3], o[4],  uv[4], -uv[5], uv[2], uv[1],
+                o[0], o[1], o[2], o[3], o[4],  uv[4],  uv[5], uv[2], uv[3],
+                o[0], o[1], o[2], o[3], o[4], -uv[4],  uv[5], uv[0], uv[3],
             ))
 
         self.canvas.add(Mesh(indices=indices, vertices=vertices,
