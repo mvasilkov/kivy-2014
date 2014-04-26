@@ -30,6 +30,7 @@ class Game(Widget):
     def update_glsl(self, nap):
         self.canvas.clear()
         self.random_fill(96)
+        Clock.unschedule(self.update_glsl)
 
     def random_fill(self, count):
         width, height = self.size
