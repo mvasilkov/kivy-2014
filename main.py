@@ -6,7 +6,7 @@ from kivy.app import App
 from kivy.base import EventLoop
 from kivy.config import Config
 
-from void_gun.game import Game
+from rockivy.game import Game
 
 
 class KivyApp(App):
@@ -14,7 +14,7 @@ class KivyApp(App):
 
     def build(self):
         EventLoop.ensure_window()
-        EventLoop.window.title = self.title = 'Kivy App Contest 2014'
+        EventLoop.window.title = self.title = 'Rockivy | Kivy App Contest 2014'
         return Game()
 
 if __name__ == '__main__':
