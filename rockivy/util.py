@@ -5,13 +5,15 @@ from os.path import join as pjoin
 
 from kivy.core.image import Image
 
+PATH = pjoin('media', 'tex')
+
 
 def load_tex_uv(atlas_name):
-    with open(pjoin('media', atlas_name), 'rb') as istream:
+    with open(pjoin(PATH, atlas_name), 'rb') as istream:
         atlas_obj = json.load(istream)
 
     tex_name, mapping = atlas_obj.popitem()
-    tex = Image(pjoin('media', tex_name)).texture
+    tex = Image(pjoin(PATH, tex_name)).texture
     tex_width, tex_height = tex.size
 
     res = {}

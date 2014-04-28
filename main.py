@@ -23,7 +23,7 @@ if __name__ == '__main__':
     Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
     from kivy.core.window import Window
-    Window.clearcolor = utils.get_color_from_hex('#242424')
+    Window.clearcolor = utils.get_color_from_hex('#ffffff')
 
     app = KivyApp()
     app.load_config()

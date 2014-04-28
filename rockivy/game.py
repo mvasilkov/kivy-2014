@@ -25,7 +25,7 @@ class Game(Widget):
             ('vPosition', 2, 'float'),
             ('vTexCoords0', 2, 'float'),
         )
-        self.tex, self.tex_uv = load_tex_uv('test.atlas')
+        self.tex, self.tex_uv = load_tex_uv('a.atlas')
 
         Clock.schedule_interval(self.update_glsl, 60 ** -1)
 
