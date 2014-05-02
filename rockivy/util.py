@@ -1,11 +1,14 @@
 from __future__ import division
 
+from collections import namedtuple
 import json
 from os.path import join as pjoin
 
 from kivy.core.image import Image
 
 PATH = pjoin('media', 'tex')
+
+R9 = namedtuple('Renderable', 'x y rot size op tex')
 
 
 def load_tex_uv(atlas_name):
@@ -25,3 +28,10 @@ def load_tex_uv(atlas_name):
                      val[2] * 0.5, val[3] * 0.5)
 
     return tex, res
+
+
+def mutate(t, changes):
+    res = list(t)
+    for idx, val in changes.iteritems():
+        res[idx] = val
+    return tuple(res)
