@@ -1,3 +1,4 @@
+from collections import namedtuple
 import math
 from random import random as rand, choice as randc
 
@@ -8,6 +9,13 @@ from kivy.uix.widget import Widget
 
 from .util import load_tex_uv
 
+CURSOR_OFFSET_X = 16
+CURSOR_OFFSET_Y = -16
+
+R9 = namedtuple('Renderable', 'x y rot size op tex')
+
+g_window = None
+
 
 class Game(Widget):
     '''Game renderer'''
@@ -15,6 +23,7 @@ class Game(Widget):
     def __init__(self, **kwargs):
         self.canvas = RenderContext(use_parent_projection=True)
         self.canvas.shader.source = 'multiquad.glsl'
+
         Widget.__init__(self, **kwargs)
 
         self.vertex_format = (
@@ -29,18 +38,28 @@ class Game(Widget):
 
         Clock.schedule_interval(self.update_glsl, 60 ** -1)
 
+        from kivy.core.window import Window
+        global g_window
+        g_window = Window
+
     def update_glsl(self, nap):
         self.canvas.clear()
-        self.random_fill(96)
-        Clock.unschedule(self.update_glsl)
+        objects = self.random_fill(96)
+        cur_x, cur_y = g_window.mouse_pos
+        objects.append(R9(x=cur_x + CURSOR_OFFSET_X,
+                          y=cur_y + CURSOR_OFFSET_Y,
+                          rot=0, size=1, op=1, tex='cursor'))
+        self.render(objects)
 
     def random_fill(self, count):
         width, height = self.size
         tex_list = self.tex_uv.keys()
-        objects = [(rand() * width, rand() * height, rand() * math.pi * 2,
-                    rand() + 0.5, rand(),
-                    randc(tex_list)) for c in xrange(count)]
-        self.render(objects)
+        return [R9(x=rand() * width,
+                   y=rand() * height,
+                   rot=rand() * math.pi * 2,
+                   size=rand() + 0.5,
+                   op=rand() + 0.5,
+                   tex=randc(tex_list)) for c in xrange(count)]
 
     def render(self, objects):
         indices = []
