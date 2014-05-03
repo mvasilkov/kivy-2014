@@ -7,6 +7,7 @@ from kivy.base import EventLoop
 from kivy.config import Config
 
 from rockivy.game import Game
+from rockivy.ui import init_ui
 
 g_game = None
 
@@ -20,7 +21,7 @@ class KivyApp(App):
 
         global g_game
         g_game = Game()
-        return g_game
+        return init_ui(g_game)
 
     def on_start(self):
         g_game.on_start()
