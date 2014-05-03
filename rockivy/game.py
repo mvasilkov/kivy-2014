@@ -35,11 +35,12 @@ class Game(Widget):
         self.frets = init_frets()
         self.strings = init_strings()
 
-        Clock.schedule_interval(self.update_glsl, 60 ** -1)
-
         from kivy.core.window import Window
         global g_window
         g_window = Window
+
+    def on_start(self):
+        Clock.schedule_interval(self.update_glsl, 60 ** -1)
 
     def update_glsl(self, nap):
         self.canvas.clear()

@@ -8,6 +8,8 @@ from kivy.config import Config
 
 from rockivy.game import Game
 
+g_game = None
+
 
 class KivyApp(App):
     '''Application class'''
@@ -15,7 +17,13 @@ class KivyApp(App):
     def build(self):
         EventLoop.ensure_window()
         EventLoop.window.title = self.title = 'Rockivy | Kivy App Contest 2014'
-        return Game()
+
+        global g_game
+        g_game = Game()
+        return g_game
+
+    def on_start(self):
+        g_game.on_start()
 
 if __name__ == '__main__':
     Config.set('graphics', 'width', '960')
