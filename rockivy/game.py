@@ -3,7 +3,7 @@ from kivy.graphics import Mesh
 from kivy.graphics.instructions import RenderContext
 from kivy.uix.widget import Widget
 
-from .fretboard import update_tex_uv, init_frets, init_strings
+from .fretboard import update_tex_uv, init_frets, init_strings, init_numbers
 from .util import R9, load_tex_uv
 
 CURSOR_OFFSET_X = 16
@@ -34,6 +34,7 @@ class Game(Widget):
 
         self.frets = init_frets()
         self.strings = init_strings()
+        self.numbers = init_numbers()
 
         from kivy.core.window import Window
         global g_window
@@ -44,7 +45,7 @@ class Game(Widget):
 
     def update_glsl(self, nap):
         self.canvas.clear()
-        objects = self.frets + self.strings
+        objects = self.frets + self.strings + self.numbers
         cur_x, cur_y = g_window.mouse_pos
         objects.append(R9(x=cur_x + CURSOR_OFFSET_X,
                           y=cur_y + CURSOR_OFFSET_Y,

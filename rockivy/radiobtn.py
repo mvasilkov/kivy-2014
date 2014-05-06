@@ -3,7 +3,7 @@ from kivy.uix.behaviors import ToggleButtonBehavior
 from kivy.uix.togglebutton import ToggleButton
 
 COLOR_DOWN = utils.get_color_from_hex('#ffffff')
-COLOR_NORMAL = utils.get_color_from_hex('#101010')
+COLOR_NORMAL = utils.get_color_from_hex('#2e3436')
 
 
 def state_change(btn, state):

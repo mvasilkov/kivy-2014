@@ -34,3 +34,10 @@ def init_strings():
                y=FRET_LENGTH - (c * STRING_SPACING) + FB_OFFSET_BOTTOM,
                rot=0, size=1, op=1, tex='string_%d' % c)
             for c in xrange(STRING_COUNT)]
+
+
+def init_numbers():
+    return [R9(x=(c - 0.5) * FRET_SPACING + FB_OFFSET_LEFT,
+               y=FB_OFFSET_BOTTOM + 0.5 - STRING_SPACING,
+               rot=0, size=1, op=1, tex='num_%d' % c)
+            for c in xrange(1, FRET_COUNT + 1)]
