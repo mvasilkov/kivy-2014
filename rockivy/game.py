@@ -1,6 +1,8 @@
 from kivy.clock import Clock
 from kivy.graphics import Mesh
-from kivy.graphics.instructions import RenderContext
+from kivy.graphics.instructions import RenderContext, Callback
+from kivy.graphics.opengl import (glBlendFunc, GL_ONE, GL_ONE_MINUS_SRC_ALPHA,
+                                  GL_SRC_ALPHA)
 from kivy.uix.widget import Widget
 
 from .fretboard import update_tex_uv, build_fretboard
@@ -22,6 +24,16 @@ VERTEX_FORMAT = (
 VERTEX_SIZE = 9
 
 g_window = None
+
+
+def select_blend_func(instr):
+    '''Premultiplied alpha'''
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
+
+
+def reset_blend_func(instr):
+    '''Normal alpha'''
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
 
 class Game(Widget):
@@ -81,9 +93,11 @@ class Game(Widget):
             self.vertices[c + 1] = cur_y
 
         self.canvas.clear()
+        self.canvas.before.add(Callback(select_blend_func))
         self.canvas.add(Mesh(indices=self.indices, vertices=self.vertices,
                              fmt=VERTEX_FORMAT, mode='triangles',
                              texture=self.tex))
+        self.canvas.after.add(Callback(reset_blend_func))
 
     def set_tuning(self, tuning):
         self.tuning = tuning
