@@ -31,7 +31,6 @@ def render_text(txt, color='#2e3436', bg_color='#ffffff',
 
     c_context.translate(out_width * 0.5, padding_top)
     c_context.set_source_rgb(*color)
-    p_context.set_antialias(cairo.ANTIALIAS_SUBPIXEL)
     p_context.update_layout(layout)
     p_context.show_layout(layout)
 

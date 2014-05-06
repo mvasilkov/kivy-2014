@@ -4,6 +4,7 @@ from kivy.graphics.instructions import RenderContext
 from kivy.uix.widget import Widget
 
 from .fretboard import update_tex_uv, build_fretboard
+from .tuning import TUNING_DEFAULT
 from .util import R9, load_tex_uv
 
 CURSOR_OFFSET_X = 16
@@ -35,6 +36,7 @@ class Game(Widget):
         self.tex, self.tex_uv = load_tex_uv('a.atlas')
         update_tex_uv(self.tex_uv)
 
+        self.tuning = TUNING_DEFAULT
         self.build()
 
         from kivy.core.window import Window
@@ -42,7 +44,7 @@ class Game(Widget):
         g_window = Window
 
     def build(self):
-        fretboard = build_fretboard()
+        fretboard = build_fretboard(self.tuning)
         self.begin_cursor = len(fretboard) * VERTEX_SIZE * 4
         fretboard += [R9(x=0, y=0, rot=0, size=1, op=1, tex='cursor')]
 
@@ -79,3 +81,7 @@ class Game(Widget):
         self.canvas.add(Mesh(indices=self.indices, vertices=self.vertices,
                              fmt=VERTEX_FORMAT, mode='triangles',
                              texture=self.tex))
+
+    def set_tuning(self, tuning):
+        self.tuning = tuning
+        self.build()

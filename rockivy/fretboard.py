@@ -12,6 +12,8 @@ STRING_LENGTH = FRET_COUNT * FRET_SPACING
 FB_OFFSET_LEFT = (960 - STRING_LENGTH) * 0.5
 FB_OFFSET_BOTTOM = (540 - FRET_LENGTH) * 0.5
 
+LEGEND_OFFSET = 20
+
 
 def update_tex_uv(tex_uv):
     tex_uv['fret'] = mutate(tex_uv['fret'], {5: FRET_LENGTH * 0.5})
@@ -38,10 +40,17 @@ def _strings():
 
 def _numbers():
     return [R9(x=(c - 0.5) * FRET_SPACING + FB_OFFSET_LEFT,
-               y=FB_OFFSET_BOTTOM + 0.5 - STRING_SPACING,
+               y=FB_OFFSET_BOTTOM + 0.5 - LEGEND_OFFSET,
                rot=0, size=1, op=1, tex='num_%d' % c)
             for c in xrange(1, FRET_COUNT + 1)]
 
 
-def build_fretboard():
-    return _frets() + _strings() + _numbers()
+def _tuning(notes):
+    return [R9(x=FB_OFFSET_LEFT + 0.5 - LEGEND_OFFSET,
+               y=FRET_LENGTH - (c * STRING_SPACING) - 0.5 + FB_OFFSET_BOTTOM,
+               rot=0, size=1, op=1, tex='tun_%s' % notes[c])
+            for c in xrange(STRING_COUNT)]
+
+
+def build_fretboard(tuning):
+    return _frets() + _strings() + _numbers() + _tuning(tuning['notes'])
