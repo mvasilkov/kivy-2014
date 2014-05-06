@@ -46,4 +46,4 @@ if __name__ == '__main__':
     for i in xrange(1, 17):
         render_text(str(i), font_name='Fira Mono OT', font_size=10,
                     out_width=23, out_height=19,
-                    out_path='./media/tex/num_%d.png' % i)
+                    out_path='./build/tex/num_%d.png' % i)

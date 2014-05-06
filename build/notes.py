@@ -7,4 +7,4 @@ if __name__ == '__main__':
         u = n.replace('#', u'♯')
         render_text(u, color='#ffffff', bg_color=None, font_size=11,
                     padding_top=-1, out_width=24, out_height=20,
-                    out_path=u'./media/tex/note_%s.png' % n, tolsto=True)
+                    out_path=u'./build/tex/note_%s.png' % n, tolsto=True)
