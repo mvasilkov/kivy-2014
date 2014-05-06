@@ -69,13 +69,16 @@ class Game(Widget):
 
     def update_glsl(self, nap):
         cur_x, cur_y = g_window.mouse_pos
+        cur_x += CURSOR_OFFSET_X
+        cur_y += CURSOR_OFFSET_Y
+
         for c in (self.begin_cursor,
                   self.begin_cursor + VERTEX_SIZE,
                   self.begin_cursor + VERTEX_SIZE * 2,
                   self.begin_cursor + VERTEX_SIZE * 3):
 
-            self.vertices[c] = cur_x + CURSOR_OFFSET_X
-            self.vertices[c + 1] = cur_y + CURSOR_OFFSET_Y
+            self.vertices[c] = cur_x
+            self.vertices[c + 1] = cur_y
 
         self.canvas.clear()
         self.canvas.add(Mesh(indices=self.indices, vertices=self.vertices,
