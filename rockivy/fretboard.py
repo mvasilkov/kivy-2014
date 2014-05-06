@@ -22,22 +22,26 @@ def update_tex_uv(tex_uv):
                             5: (c >> 1) + 1})) for c in xrange(STRING_COUNT)])
 
 
-def init_frets():
+def _frets():
     return [R9(x=c * FRET_SPACING + FB_OFFSET_LEFT,
                y=FRET_LENGTH * 0.5 + FB_OFFSET_BOTTOM,
                rot=0, size=1, op=1, tex='fret')
             for c in xrange(FRET_COUNT + 1)]
 
 
-def init_strings():
+def _strings():
     return [R9(x=STRING_LENGTH * 0.5 + FB_OFFSET_LEFT,
                y=FRET_LENGTH - (c * STRING_SPACING) + FB_OFFSET_BOTTOM,
                rot=0, size=1, op=1, tex='string_%d' % c)
             for c in xrange(STRING_COUNT)]
 
 
-def init_numbers():
+def _numbers():
     return [R9(x=(c - 0.5) * FRET_SPACING + FB_OFFSET_LEFT,
                y=FB_OFFSET_BOTTOM + 0.5 - STRING_SPACING,
                rot=0, size=1, op=1, tex='num_%d' % c)
             for c in xrange(1, FRET_COUNT + 1)]
+
+
+def build_fretboard():
+    return _frets() + _strings() + _numbers()
