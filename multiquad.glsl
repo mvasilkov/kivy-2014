@@ -1,20 +1,10 @@
 ---vertex
-#ifdef GL_ES
-precision highp float;
-#endif
-
-varying   vec4  frag_color;
-varying   vec2  tex_coord0;
+$HEADER$
 
 attribute vec2  vCenter;
 attribute float vRotation;
 attribute float vScale;
 attribute float vOpacity;
-attribute vec2  vPosition;
-attribute vec2  vTexCoords0;
-
-uniform   mat4  modelview_mat;
-uniform   mat4  projection_mat;
 
 void main(void)
 {
@@ -38,14 +28,7 @@ void main(void)
 }
 
 ---fragment
-#ifdef GL_ES
-precision highp float;
-#endif
-
-varying vec4      frag_color;
-varying vec2      tex_coord0;
-
-uniform sampler2D texture0;
+$HEADER$
 
 void main(void)
 {
