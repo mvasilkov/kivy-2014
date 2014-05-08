@@ -3,6 +3,7 @@ from kivy.graphics import Mesh
 from kivy.graphics.instructions import RenderContext, Callback
 from kivy.graphics.opengl import (glBlendFunc, GL_ONE, GL_ONE_MINUS_SRC_ALPHA,
                                   GL_SRC_ALPHA)
+from kivy.resources import resource_find
 from kivy.uix.widget import Widget
 
 from .fretboard import update_tex_uv, build_fretboard
@@ -26,11 +27,13 @@ VERTEX_SIZE = 9
 g_window = None
 
 
+@Callback
 def select_blend_func(instr):
     '''Premultiplied alpha'''
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
 
 
+@Callback
 def reset_blend_func(instr):
     '''Normal alpha'''
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -41,7 +44,7 @@ class Game(Widget):
 
     def __init__(self, **kwargs):
         self.canvas = RenderContext(use_parent_projection=True)
-        self.canvas.shader.source = 'multiquad.glsl'
+        self.canvas.shader.source = resource_find('multiquad.glsl')
 
         Widget.__init__(self, **kwargs)
 
@@ -93,11 +96,11 @@ class Game(Widget):
             self.vertices[c + 1] = cur_y
 
         self.canvas.clear()
-        self.canvas.before.add(Callback(select_blend_func))
+        self.canvas.before.add(select_blend_func)
         self.canvas.add(Mesh(indices=self.indices, vertices=self.vertices,
                              fmt=VERTEX_FORMAT, mode='triangles',
                              texture=self.tex))
-        self.canvas.after.add(Callback(reset_blend_func))
+        self.canvas.after.add(reset_blend_func)
 
     def set_tuning(self, tuning):
         self.tuning = tuning

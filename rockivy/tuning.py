@@ -19,7 +19,16 @@ TUNING_D = {
     'name': '1 Step Down',
     'notes': (D, A, F, C, G, D),
 }
-TUNING = (TUNING_DEFAULT, TUNING_DROP_D, TUNING_Eb, TUNING_D)
+TUNING_OPEN_D = {
+    'name': 'Open D',
+    'notes': (D, A, Fd, D, A, D),
+}
+TUNING_OPEN_G = {
+    'name': 'Open G',
+    'notes': (D, B, G, D, G, D),
+}
+TUNING = (TUNING_DEFAULT, TUNING_DROP_D, TUNING_OPEN_D, TUNING_OPEN_G,
+          TUNING_Eb, TUNING_D)
 
 
 def get_string(start_note, count):
