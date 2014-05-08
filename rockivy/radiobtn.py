@@ -28,6 +28,9 @@ class Radio(ToggleButton):
 
         kwargs['markup'] = False
 
+        self.rel = kwargs['rel']
+        del kwargs['rel']
+
         ToggleButton.__init__(self, **kwargs)
 
         self.bind(state=state_change)
