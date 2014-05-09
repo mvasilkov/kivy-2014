@@ -11,6 +11,10 @@ TUNING_DROP_D = {
     'name': 'Drop D',
     'notes': (E, B, G, D, A, D),
 }
+TUNING_DROP_C = {
+    'name': 'Drop C',
+    'notes': (D, A, F, C, G, C),
+}
 TUNING_Eb = {
     'name': u'\u00bd Step Down',
     'notes': (Dd, Ad, Fd, Cd, Gd, Dd),
@@ -27,8 +31,8 @@ TUNING_OPEN_G = {
     'name': 'Open G',
     'notes': (D, B, G, D, G, D),
 }
-TUNING = (TUNING_DEFAULT, TUNING_DROP_D, TUNING_OPEN_D, TUNING_OPEN_G,
-          TUNING_Eb, TUNING_D)
+TUNING = (TUNING_DEFAULT, TUNING_DROP_D, TUNING_DROP_C, TUNING_OPEN_D,
+          TUNING_OPEN_G, TUNING_Eb, TUNING_D)
 
 
 def get_string(start_note, count):

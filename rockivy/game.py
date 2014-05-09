@@ -1,14 +1,14 @@
 from kivy.clock import Clock
 from kivy.graphics import Mesh
 from kivy.graphics.instructions import RenderContext, Callback
-from kivy.graphics.opengl import (glBlendFunc, GL_ONE, GL_ONE_MINUS_SRC_ALPHA,
-                                  GL_SRC_ALPHA)
+from kivy.graphics.opengl import (glBlendFunc,
+                                  GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA)
 from kivy.resources import resource_find
 from kivy.uix.widget import Widget
 
 from .fretboard import update_tex_uv, build_fretboard
 from .tuning import TUNING_DEFAULT
-from .util import R9, load_tex_uv
+from .util import Quad, load_tex_uv
 
 CURSOR_OFFSET_X = 16
 CURSOR_OFFSET_Y = -16
@@ -61,7 +61,7 @@ class Game(Widget):
     def build(self):
         fretboard = build_fretboard(self.tuning)
         self.begin_cursor = len(fretboard) * VERTEX_SIZE * 4
-        fretboard += [R9(x=0, y=0, rot=0, size=1, op=1, tex='cursor')]
+        fretboard += [Quad(x=0, y=0, rot=0, size=1, op=1, tex='cursor')]
 
         self.indices = []
         ix = self.indices.extend

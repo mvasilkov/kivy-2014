@@ -8,7 +8,7 @@ from kivy.core.image import Image
 
 PATH = realpath(path_join(dirname(__file__), '..', 'media'))
 
-R9 = namedtuple('Renderable', 'x y rot size op tex')
+Quad = namedtuple('Quad', 'x y rot size op tex')
 
 
 def load_tex_uv(atlas_name):
