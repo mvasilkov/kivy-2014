@@ -35,7 +35,11 @@ TUNING = (TUNING_DEFAULT, TUNING_DROP_D, TUNING_DROP_C, TUNING_OPEN_D,
           TUNING_OPEN_G, TUNING_Eb, TUNING_D)
 
 
-def get_string(start_note, count):
+def get_seq(start_note):
     seq = dropwhile(lambda n: n != start_note, cycle(NOTES))
     next(seq)
-    return islice(seq, count)
+    return seq
+
+
+def get_string(start_note, count):
+    return tuple(islice(get_seq(start_note), count))

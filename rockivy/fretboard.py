@@ -13,8 +13,8 @@ STRING_LENGTH = FRET_COUNT * FRET_SPACING
 LEGEND_OFFSET_X = 20
 LEGEND_OFFSET_Y = 25
 
-FB_LEFT = (960 - STRING_LENGTH) * 0.5 + LEGEND_OFFSET_X * 0.5
-FB_BOTTOM = (540 - FRET_LENGTH) * 0.5 + LEGEND_OFFSET_Y
+FB_LEFT = (960 - STRING_LENGTH) * 0.5 + LEGEND_OFFSET_X * 0.5 + 5
+FB_BOTTOM = (540 - FRET_LENGTH) * 0.5 + LEGEND_OFFSET_Y + 40
 
 
 def update_tex_uv(tex_uv):
@@ -47,32 +47,36 @@ def _numbers():
             for c in xrange(1, FRET_COUNT + 1)]
 
 
-def _tuning(notes):
-    return [Quad(x=FB_LEFT + 0.5 - LEGEND_OFFSET_X,
-                 y=FRET_LENGTH - (c * STRING_SPACING) - 0.5 + FB_BOTTOM,
-                 rot=0, size=1, op=1, tex='tun_%s' % notes[c])
-            for c in xrange(STRING_COUNT)]
+def _tuning(notes, scale_notes):
+    res = [Quad(x=FB_LEFT - LEGEND_OFFSET_X,
+                y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM,
+                rot=0, size=1, op=1, tex='note_tun')
+           for c in xrange(STRING_COUNT) if notes[c] in scale_notes]
+    return res + [Quad(x=FB_LEFT - LEGEND_OFFSET_X,
+                       y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM,
+                       rot=0, size=1, op=1, tex='tun_%s' % notes[c])
+                  for c in xrange(STRING_COUNT)]
 
 
-def _notes(string, notes):
+def _notes(string, notes, scale_notes):
     y = FRET_LENGTH - (string * STRING_SPACING) + FB_BOTTOM
     res = [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT,
                 y=y, rot=0, size=1, op=1, tex='note')
-           for c in xrange(FRET_COUNT)]
+           for c in xrange(FRET_COUNT) if notes[c] in scale_notes]
     return res + [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT,
-                       y=y, rot=0, size=1, op=1, tex='note_%s' % next(notes))
-                  for c in xrange(FRET_COUNT)]
+                       y=y, rot=0, size=1, op=1, tex='note_%s' % notes[c])
+                  for c in xrange(FRET_COUNT) if notes[c] in scale_notes]
 
 
-def build_fretboard(tuning):
+def build_fretboard(scale, tuning):
     res = []
     rx = res.extend
 
     rx(_frets())
     rx(_strings())
     rx(_numbers())
-    rx(_tuning(tuning['notes']))
+    rx(_tuning(tuning['notes'], scale.notes))
     for c in xrange(STRING_COUNT):
-        rx(_notes(c, get_string(tuning['notes'][c], FRET_COUNT)))
+        rx(_notes(c, get_string(tuning['notes'][c], FRET_COUNT), scale.notes))
 
     return res

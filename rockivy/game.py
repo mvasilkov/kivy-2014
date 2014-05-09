@@ -7,7 +7,8 @@ from kivy.resources import resource_find
 from kivy.uix.widget import Widget
 
 from .fretboard import update_tex_uv, build_fretboard
-from .tuning import TUNING_DEFAULT
+from .scales import SCALES
+from .tuning import NOTES, TUNING_DEFAULT
 from .util import Quad, load_tex_uv
 
 CURSOR_OFFSET_X = 16
@@ -51,6 +52,9 @@ class Game(Widget):
         self.tex, self.tex_uv = load_tex_uv('a.atlas')
         update_tex_uv(self.tex_uv)
 
+        self.root_note = NOTES[0]
+        self.scale_class = SCALES[0]
+        self.scale = self.scale_class(self.root_note)
         self.tuning = TUNING_DEFAULT
         self.build()
 
@@ -59,7 +63,7 @@ class Game(Widget):
         g_window = Window
 
     def build(self):
-        fretboard = build_fretboard(self.tuning)
+        fretboard = build_fretboard(self.scale, self.tuning)
         self.begin_cursor = len(fretboard) * VERTEX_SIZE * 4
         fretboard += [Quad(x=0, y=0, rot=0, size=1, op=1, tex='cursor')]
 
@@ -101,6 +105,16 @@ class Game(Widget):
                              fmt=VERTEX_FORMAT, mode='triangles',
                              texture=self.tex))
         self.canvas.after.add(reset_blend_func)
+
+    def set_root_note(self, root_note):
+        self.root_note = root_note
+        self.scale = self.scale_class(self.root_note)
+        self.build()
+
+    def set_scale_class(self, scale_class):
+        self.scale_class = scale_class
+        self.scale = self.scale_class(self.root_note)
+        self.build()
 
     def set_tuning(self, tuning):
         self.tuning = tuning
