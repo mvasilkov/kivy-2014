@@ -26,6 +26,9 @@ class Radio(ToggleButton):
         else:
             kwargs['color'] = COLOR_NORMAL
 
+        if kwargs['group'] == 'notes':
+            kwargs['font_name'] = 'DroidSans-Regular.ttf'
+
         kwargs['markup'] = False
 
         self.rel = kwargs['rel']

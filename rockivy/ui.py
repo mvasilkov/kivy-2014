@@ -35,7 +35,7 @@ def _notes(game, view):
 
     for i, note in enumerate(NOTES):
         kwargs = {
-            'text': note,
+            'text': note.replace('#', u'\u266f'),
             'group': 'notes',
             'rel': note,
         }
