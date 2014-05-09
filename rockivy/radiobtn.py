@@ -19,7 +19,7 @@ class Radio(ToggleButton):
     def __init__(self, **kwargs):
         kwargs['background_normal'] = 'media/btn.png'
         kwargs['background_down'] = 'media/btn_down.png'
-        kwargs['border'] = (0,) * 4
+        kwargs['border'] = (2,) * 4
 
         if kwargs.get('state') == 'down':
             kwargs['color'] = COLOR_DOWN
