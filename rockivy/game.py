@@ -47,7 +47,7 @@ class Game(Widget):
 
     def __init__(self, **kwargs):
         self.canvas = RenderContext(use_parent_projection=True)
-        self.canvas.shader.source = resource_find('multiquad.glsl')
+        self.canvas.shader.source = resource_find('game.glsl')
 
         Widget.__init__(self, **kwargs)
 

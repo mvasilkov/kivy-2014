@@ -25,4 +25,7 @@ License
 -------
 MIT (see [LICENSE][2])
 
+Droid Sans is from Google, distributed under the terms of the [Apache License 2.0][3]
+
 [2]: https://github.com/mvasilkov/kivy-2014/blob/master/LICENSE
+[3]: http://apache.org/licenses/LICENSE-2.0
