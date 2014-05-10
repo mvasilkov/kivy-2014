@@ -8,8 +8,20 @@ from .tuning import NOTES, TUNING
 
 PADDING = 4
 HEIGHT = 40
+HEADING_COLOR = get_color_from_hex('#4b4d49')
 LABEL_COLOR = get_color_from_hex('#2e3436')
 LABEL_SIZE = 110
+
+
+def _heading(game, view):
+    heading = Label(font_name='DroidSans-Regular.ttf', font_size=18,
+                    color=HEADING_COLOR, markup=False)
+    heading.pos = (PADDING, 500 - PADDING)
+    heading.size = (960 - PADDING * 2, HEIGHT)
+    view.add_widget(heading)
+
+    game._heading = heading
+    game.update_heading()
 
 
 def _add_widgets(view, label, widgets, line, size):
@@ -103,6 +115,7 @@ def _tuning(game, view):
 def init_ui(game):
     view = Widget()
 
+    _heading(game, view)
     _notes(game, view)
     _scales(game, view)
     _tuning(game, view)

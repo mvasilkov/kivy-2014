@@ -87,6 +87,8 @@ class Game(Widget):
                 o[0], o[1], o[2], o[3], o[4], -uv[4],  uv[5], uv[0], uv[3],
             ))
 
+        self.update_heading()
+
     def on_start(self):
         Clock.schedule_interval(self.update_glsl, 60 ** -1)
 
@@ -124,3 +126,10 @@ class Game(Widget):
     def set_tuning(self, tuning):
         self.tuning = tuning
         self.build()
+
+    _heading = None
+
+    def update_heading(self):
+        if self._heading:
+            self._heading.text = u'%s \u2013 %s tuning' % (unicode(self.scale),
+                                                           self.tuning['name'])
