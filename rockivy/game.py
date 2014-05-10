@@ -56,13 +56,13 @@ class Game(Widget):
         self.scale_class = SCALES[0]
         self.scale = self.scale_class(self.root_note)
         self.tuning = TUNING_DEFAULT
-        self.build()
+        self.build(False)
 
         from kivy.core.window import Window
         global g_window
         g_window = Window
 
-    def build(self):
+    def build(self, updating=True):
         fretboard = build_fretboard(self.scale, self.tuning)
 
         if Game.REPLACE_CURSOR:
@@ -88,10 +88,16 @@ class Game(Widget):
             if o[2] < 1:
                 self.animate.add(i)
 
+        if updating:
+            self.set_updating()
+
         self.update_heading()
 
-    def on_start(self):
+    def set_updating(self):
+        Clock.unschedule(self.update_glsl)
         Clock.schedule_interval(self.update_glsl, 60 ** -1)
+
+    on_start = set_updating
 
     def update_glsl(self, nap):
         if Game.REPLACE_CURSOR:
@@ -122,6 +128,9 @@ class Game(Widget):
                           idx + VERTEX_SIZE * 3):
 
                     self.vertices[c] = val
+
+        if not self.animate and not Game.REPLACE_CURSOR:
+            Clock.unschedule(self.update_glsl)
 
         self.canvas.clear()
         self.canvas.before.add(select_blend_func)

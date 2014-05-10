@@ -29,6 +29,7 @@ if __name__ == '__main__':
     Config.set('graphics', 'width', '960')
     Config.set('graphics', 'height', '540')  # 16:9
     Config.set('graphics', 'resizable', '0')
+    Config.set('kivy', 'window_icon', 'ico128.png')
 
     if Game.REPLACE_CURSOR:
         Config.set('graphics', 'show_cursor', '0')
