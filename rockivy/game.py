@@ -76,7 +76,8 @@ class Game(Widget):
 
         self.vertices = []
         vx = self.vertices.extend
-        for o in fretboard:
+        self.animate = set()
+        for i, o in enumerate(fretboard):
             uv = self.tex_uv[o[3]]
             vx((
                 o[0], o[1], o[2], -uv[4], -uv[5], uv[0], uv[1],
@@ -84,6 +85,8 @@ class Game(Widget):
                 o[0], o[1], o[2],  uv[4],  uv[5], uv[2], uv[3],
                 o[0], o[1], o[2], -uv[4],  uv[5], uv[0], uv[3],
             ))
+            if o[2] < 1:
+                self.animate.add(i)
 
         self.update_heading()
 
@@ -103,6 +106,22 @@ class Game(Widget):
 
                 self.vertices[c] = cur_x
                 self.vertices[c + 1] = cur_y
+
+        if self.animate:
+            for i in self.animate.copy():
+                idx = i * VERTEX_SIZE * 4 + 2
+                val = self.vertices[idx] * (nap * 25 + 1)
+
+                if val >= 1:
+                    val = 1
+                    self.animate.remove(i)
+
+                for c in (idx,
+                          idx + VERTEX_SIZE,
+                          idx + VERTEX_SIZE * 2,
+                          idx + VERTEX_SIZE * 3):
+
+                    self.vertices[c] = val
 
         self.canvas.clear()
         self.canvas.before.add(select_blend_func)

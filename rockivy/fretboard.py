@@ -57,14 +57,16 @@ def _tuning(notes, scale_notes, root_note):
                        size=1, tex='tun_%s' % notes[c])
                   for c in xrange(STRING_COUNT)]
 
+_sz = lambda c: (FRET_COUNT - c) / (FRET_COUNT * 10.0)
+
 
 def _notes(string, notes, scale_notes, root_note):
     y = FRET_LENGTH - (string * STRING_SPACING) + FB_BOTTOM
-    res = [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT, y=y, size=1,
+    res = [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT, y=y, size=_sz(c),
                 tex='root_note' if notes[c] == root_note else 'note')
            for c in xrange(FRET_COUNT) if notes[c] in scale_notes]
     return res + [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT,
-                       y=y, size=1, tex='note_%s' % notes[c])
+                       y=y, size=_sz(c), tex='note_%s' % notes[c])
                   for c in xrange(FRET_COUNT) if notes[c] in scale_notes]
 
 
