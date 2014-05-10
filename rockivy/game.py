@@ -43,6 +43,8 @@ def reset_blend_func(instr):
 class Game(Widget):
     '''Game renderer'''
 
+    REPLACE_CURSOR = False
+
     def __init__(self, **kwargs):
         self.canvas = RenderContext(use_parent_projection=True)
         self.canvas.shader.source = resource_find('multiquad.glsl')
@@ -64,8 +66,10 @@ class Game(Widget):
 
     def build(self):
         fretboard = build_fretboard(self.scale, self.tuning)
-        self.begin_cursor = len(fretboard) * VERTEX_SIZE * 4
-        fretboard += [Quad(x=0, y=0, rot=0, size=1, op=1, tex='cursor')]
+
+        if Game.REPLACE_CURSOR:
+            self.begin_cursor = len(fretboard) * VERTEX_SIZE * 4
+            fretboard += [Quad(x=0, y=0, rot=0, size=1, op=1, tex='cursor')]
 
         self.indices = []
         ix = self.indices.extend
@@ -87,17 +91,18 @@ class Game(Widget):
         Clock.schedule_interval(self.update_glsl, 60 ** -1)
 
     def update_glsl(self, nap):
-        cur_x, cur_y = g_window.mouse_pos
-        cur_x += CURSOR_OFFSET_X
-        cur_y += CURSOR_OFFSET_Y
+        if Game.REPLACE_CURSOR:
+            cur_x, cur_y = g_window.mouse_pos
+            cur_x += CURSOR_OFFSET_X
+            cur_y += CURSOR_OFFSET_Y
 
-        for c in (self.begin_cursor,
-                  self.begin_cursor + VERTEX_SIZE,
-                  self.begin_cursor + VERTEX_SIZE * 2,
-                  self.begin_cursor + VERTEX_SIZE * 3):
+            for c in (self.begin_cursor,
+                      self.begin_cursor + VERTEX_SIZE,
+                      self.begin_cursor + VERTEX_SIZE * 2,
+                      self.begin_cursor + VERTEX_SIZE * 3):
 
-            self.vertices[c] = cur_x
-            self.vertices[c + 1] = cur_y
+                self.vertices[c] = cur_x
+                self.vertices[c + 1] = cur_y
 
         self.canvas.clear()
         self.canvas.before.add(select_blend_func)

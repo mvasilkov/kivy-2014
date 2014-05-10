@@ -1,6 +1,6 @@
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
-from kivy.utils import get_color_from_hex as css_color
+from kivy.utils import get_color_from_hex
 
 from .radiobtn import Radio
 from .scales import SCALES
@@ -8,7 +8,7 @@ from .tuning import NOTES, TUNING
 
 PADDING = 4
 HEIGHT = 40
-LABEL_COLOR = css_color('#2e3436')
+LABEL_COLOR = get_color_from_hex('#2e3436')
 LABEL_SIZE = 110
 
 
@@ -102,8 +102,47 @@ def _tuning(game, view):
 
 def init_ui(game):
     view = Widget()
+
     _notes(game, view)
     _scales(game, view)
     _tuning(game, view)
+
     view.add_widget(game)
     return view
+
+CURSOR = (
+    '@                       ',
+    '@@                      ',
+    '@-@                     ',
+    '@--@                    ',
+    '@---@                   ',
+    '@----@                  ',
+    '@-----@                 ',
+    '@------@                ',
+    '@-------@               ',
+    '@--------@              ',
+    '@---------@             ',
+    '@----------@            ',
+    '@------@@@@@            ',
+    '@---@--@                ',
+    '@--@ @--@               ',
+    '@-@  @--@               ',
+    '@@    @--@              ',
+    '      @--@              ',
+    '       @@               ',
+    '                        ',
+    '                        ',
+    '                        ',
+    '                        ',
+    '                        ',
+)
+
+
+def pygame_set_cursor():
+    try:
+        from pygame import cursors, mouse
+
+        a, b = cursors.compile(CURSOR, black='@', white='-', xor='$')
+        mouse.set_cursor((24, 24), (0, 0), a, b)
+    except:
+        pass

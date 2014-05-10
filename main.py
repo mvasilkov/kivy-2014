@@ -7,9 +7,7 @@ from kivy.base import EventLoop
 from kivy.config import Config
 
 from rockivy.game import Game
-from rockivy.ui import init_ui
-
-g_game = None
+from rockivy.ui import init_ui, pygame_set_cursor
 
 
 class KivyApp(App):
@@ -19,18 +17,22 @@ class KivyApp(App):
         EventLoop.ensure_window()
         EventLoop.window.title = self.title = 'Rockivy | Kivy App Contest 2014'
 
-        global g_game
-        g_game = Game()
-        return init_ui(g_game)
+        if EventLoop.window.__class__.__name__.endswith('Pygame'):
+            # because pygame hates nice cursors
+            pygame_set_cursor()
 
-    def on_start(self):
-        g_game.on_start()
+        game = Game()
+        self.on_start = game.on_start
+        return init_ui(game)
 
 if __name__ == '__main__':
     Config.set('graphics', 'width', '960')
     Config.set('graphics', 'height', '540')  # 16:9
     Config.set('graphics', 'resizable', '0')
-    Config.set('graphics', 'show_cursor', '0')
+
+    if Game.REPLACE_CURSOR:
+        Config.set('graphics', 'show_cursor', '0')
+
     Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
     from kivy.core.window import Window
