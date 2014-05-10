@@ -29,44 +29,42 @@ def update_tex_uv(tex_uv):
 def _frets():
     return [Quad(x=c * FRET_SPACING + FB_LEFT,
                  y=FRET_LENGTH * 0.5 + FB_BOTTOM,
-                 rot=0, size=1, op=1, tex='fret')
+                 size=1, tex='fret')
             for c in xrange(FRET_COUNT + 1)]
 
 
 def _strings():
     return [Quad(x=STRING_LENGTH * 0.5 + FB_LEFT,
                  y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM,
-                 rot=0, size=1, op=1, tex='string_%d' % c)
+                 size=1, tex='string_%d' % c)
             for c in xrange(STRING_COUNT)]
 
 
 def _numbers():
     return [Quad(x=(c - 0.5) * FRET_SPACING + FB_LEFT,
                  y=FB_BOTTOM + 0.5 - LEGEND_OFFSET_Y,
-                 rot=0, size=1, op=1, tex='num_%d' % c)
+                 size=1, tex='num_%d' % c)
             for c in xrange(1, FRET_COUNT + 1)]
 
 
 def _tuning(notes, scale_notes, root_note):
     res = [Quad(x=FB_LEFT - LEGEND_OFFSET_X,
-                y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM,
-                rot=0, size=1, op=1,
+                y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM, size=1,
                 tex='root_note_tun' if notes[c] == root_note else 'note_tun')
            for c in xrange(STRING_COUNT) if notes[c] in scale_notes]
     return res + [Quad(x=FB_LEFT - LEGEND_OFFSET_X,
                        y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM,
-                       rot=0, size=1, op=1, tex='tun_%s' % notes[c])
+                       size=1, tex='tun_%s' % notes[c])
                   for c in xrange(STRING_COUNT)]
 
 
 def _notes(string, notes, scale_notes, root_note):
     y = FRET_LENGTH - (string * STRING_SPACING) + FB_BOTTOM
-    res = [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT,
-                y=y, rot=0, size=1, op=1,
+    res = [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT, y=y, size=1,
                 tex='root_note' if notes[c] == root_note else 'note')
            for c in xrange(FRET_COUNT) if notes[c] in scale_notes]
     return res + [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT,
-                       y=y, rot=0, size=1, op=1, tex='note_%s' % notes[c])
+                       y=y, size=1, tex='note_%s' % notes[c])
                   for c in xrange(FRET_COUNT) if notes[c] in scale_notes]
 
 

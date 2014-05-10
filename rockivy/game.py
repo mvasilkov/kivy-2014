@@ -16,14 +16,12 @@ CURSOR_OFFSET_Y = -16
 
 VERTEX_FORMAT = (
     ('vCenter', 2, 'float'),
-    ('vRotation', 1, 'float'),
     ('vScale', 1, 'float'),
-    ('vOpacity', 1, 'float'),
     ('vPosition', 2, 'float'),
     ('vTexCoords0', 2, 'float'),
 )
 
-VERTEX_SIZE = 9
+VERTEX_SIZE = 7
 
 g_window = None
 
@@ -69,7 +67,7 @@ class Game(Widget):
 
         if Game.REPLACE_CURSOR:
             self.begin_cursor = len(fretboard) * VERTEX_SIZE * 4
-            fretboard += [Quad(x=0, y=0, rot=0, size=1, op=1, tex='cursor')]
+            fretboard += [Quad(x=0, y=0, size=1, tex='cursor')]
 
         self.indices = []
         ix = self.indices.extend
@@ -79,12 +77,12 @@ class Game(Widget):
         self.vertices = []
         vx = self.vertices.extend
         for o in fretboard:
-            uv = self.tex_uv[o[5]]
+            uv = self.tex_uv[o[3]]
             vx((
-                o[0], o[1], o[2], o[3], o[4], -uv[4], -uv[5], uv[0], uv[1],
-                o[0], o[1], o[2], o[3], o[4],  uv[4], -uv[5], uv[2], uv[1],
-                o[0], o[1], o[2], o[3], o[4],  uv[4],  uv[5], uv[2], uv[3],
-                o[0], o[1], o[2], o[3], o[4], -uv[4],  uv[5], uv[0], uv[3],
+                o[0], o[1], o[2], -uv[4], -uv[5], uv[0], uv[1],
+                o[0], o[1], o[2],  uv[4], -uv[5], uv[2], uv[1],
+                o[0], o[1], o[2],  uv[4],  uv[5], uv[2], uv[3],
+                o[0], o[1], o[2], -uv[4],  uv[5], uv[0], uv[3],
             ))
 
         self.update_heading()
