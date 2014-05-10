@@ -18,7 +18,12 @@ class Radio(ToggleButton):
 
     def __init__(self, **kwargs):
         kwargs['background_normal'] = 'media/btn.png'
-        kwargs['background_down'] = 'media/btn_down.png'
+
+        if kwargs['group'] == 'notes':
+            kwargs['background_down'] = 'media/btn_down_g.png'
+        else:
+            kwargs['background_down'] = 'media/btn_down.png'
+
         kwargs['border'] = (2,) * 4
 
         if kwargs.get('state') == 'down':

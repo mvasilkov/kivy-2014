@@ -47,10 +47,11 @@ def _numbers():
             for c in xrange(1, FRET_COUNT + 1)]
 
 
-def _tuning(notes, scale_notes):
+def _tuning(notes, scale_notes, root_note):
     res = [Quad(x=FB_LEFT - LEGEND_OFFSET_X,
                 y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM,
-                rot=0, size=1, op=1, tex='note_tun')
+                rot=0, size=1, op=1,
+                tex='root_note_tun' if notes[c] == root_note else 'note_tun')
            for c in xrange(STRING_COUNT) if notes[c] in scale_notes]
     return res + [Quad(x=FB_LEFT - LEGEND_OFFSET_X,
                        y=FRET_LENGTH - (c * STRING_SPACING) + FB_BOTTOM,
@@ -58,10 +59,11 @@ def _tuning(notes, scale_notes):
                   for c in xrange(STRING_COUNT)]
 
 
-def _notes(string, notes, scale_notes):
+def _notes(string, notes, scale_notes, root_note):
     y = FRET_LENGTH - (string * STRING_SPACING) + FB_BOTTOM
     res = [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT,
-                y=y, rot=0, size=1, op=1, tex='note')
+                y=y, rot=0, size=1, op=1,
+                tex='root_note' if notes[c] == root_note else 'note')
            for c in xrange(FRET_COUNT) if notes[c] in scale_notes]
     return res + [Quad(x=(c + 0.5) * FRET_SPACING + 0.5 + FB_LEFT,
                        y=y, rot=0, size=1, op=1, tex='note_%s' % notes[c])
@@ -75,8 +77,9 @@ def build_fretboard(scale, tuning):
     rx(_frets())
     rx(_strings())
     rx(_numbers())
-    rx(_tuning(tuning['notes'], scale.notes))
+    rx(_tuning(tuning['notes'], scale.notes, scale.root_note))
     for c in xrange(STRING_COUNT):
-        rx(_notes(c, get_string(tuning['notes'][c], FRET_COUNT), scale.notes))
+        string = get_string(tuning['notes'][c], FRET_COUNT)
+        rx(_notes(c, string, scale.notes, scale.root_note))
 
     return res

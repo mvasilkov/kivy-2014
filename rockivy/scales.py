@@ -30,17 +30,32 @@ class BaseSeq(object):
 
 
 class Major(BaseSeq):
-    name = 'Major Scale'
+    '''Major Scale'''
+    name = __doc__
     size = (T, T, S, T, T, T, S)
 
 
 class Minor(BaseSeq):
-    name = 'Minor Scale'
+    '''Minor Scale'''
+    name = __doc__
     size = (T, S, T, T, S, T, T)
 
 
 class Blues(BaseSeq):
-    name = 'Blues Scale'
+    '''Blues Scale'''
+    name = __doc__
     size = (I3, T, S, S, I3, T)
 
-SCALES = (Major, Minor, Blues)
+
+class PentatonicMajor(BaseSeq):
+    '''Pentatonic Major'''
+    name = __doc__
+    size = (T, T, I3, T, I3)
+
+
+class PentatonicMinor(BaseSeq):
+    '''Pentatonic Minor'''
+    name = __doc__
+    size = (I3, T, T, I3, T)
+
+SCALES = (Major, Minor, PentatonicMajor, PentatonicMinor, Blues)
