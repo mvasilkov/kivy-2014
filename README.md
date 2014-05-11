@@ -1,3 +1,4 @@
+![](https://raw.githubusercontent.com/mvasilkov/kivy-2014/master/ico128.png)
 Rockivy
 =======
 [Rockivy][1] is an app for learning guitar scales, written in Python.
