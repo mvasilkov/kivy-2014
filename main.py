@@ -19,8 +19,11 @@ class KivyApp(App):
         EventLoop.window.title = self.title = 'Rockivy | Kivy App Contest 2014'
 
         if EventLoop.window.__class__.__name__.endswith('Pygame'):
-            # because pygame hates nice cursors
-            pygame_set_cursor()
+            try:
+                # because pygame hates nice cursors
+                pygame_set_cursor()
+            except:
+                pass
 
         game = Game()
         self.on_start = game.on_start

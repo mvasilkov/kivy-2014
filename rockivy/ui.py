@@ -152,10 +152,14 @@ CURSOR = (
 
 
 def pygame_set_cursor():
-    try:
-        from pygame import cursors, mouse
+    from platform import system
+    from pygame import cursors, mouse
 
-        a, b = cursors.compile(CURSOR, black='@', white='-', xor='$')
-        mouse.set_cursor((24, 24), (0, 0), a, b)
-    except:
-        pass
+    kwargs = dict(black='@', white='-', xor='$')
+
+    if system() == 'Windows':
+        # https://bitbucket.org/pygame/pygame/issue/200
+        kwargs['black'], kwargs['white'] = kwargs['white'], kwargs['black']
+
+    a, b = cursors.compile(CURSOR, **kwargs)
+    mouse.set_cursor((24, 24), (0, 0), a, b)
