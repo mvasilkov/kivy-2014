@@ -5,6 +5,7 @@ from kivy import utils
 from kivy.app import App
 from kivy.base import EventLoop
 from kivy.config import Config
+from kivy.resources import resource_find
 
 from rockivy.game import Game
 from rockivy.ui import init_ui, pygame_set_cursor
@@ -29,7 +30,7 @@ if __name__ == '__main__':
     Config.set('graphics', 'width', '960')
     Config.set('graphics', 'height', '540')  # 16:9
     Config.set('graphics', 'resizable', '0')
-    Config.set('kivy', 'window_icon', 'ico128.png')
+    Config.set('kivy', 'window_icon', resource_find('ico128.png'))
 
     if Game.REPLACE_CURSOR:
         Config.set('graphics', 'show_cursor', '0')

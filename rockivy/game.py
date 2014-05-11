@@ -9,7 +9,7 @@ from kivy.uix.widget import Widget
 from .fretboard import update_tex_uv, build_fretboard
 from .scales import SCALES
 from .tuning import NOTES, TUNING_DEFAULT
-from .util import Quad, load_tex_uv
+from .util import Quad, load_tex_uv, blending_is_broken
 
 CURSOR_OFFSET_X = 16
 CURSOR_OFFSET_Y = -16
@@ -48,6 +48,8 @@ class Game(Widget):
         self.canvas.shader.source = resource_find('game.glsl')
 
         Widget.__init__(self, **kwargs)
+
+        self.blending_is_broken = blending_is_broken()
 
         self.tex, self.tex_uv = load_tex_uv('a.atlas')
         update_tex_uv(self.tex_uv)
@@ -100,6 +102,9 @@ class Game(Widget):
     on_start = set_updating
 
     def update_glsl(self, nap):
+        '''
+        https://github.com/kivy/kivy/issues/2178
+
         if Game.REPLACE_CURSOR:
             cur_x, cur_y = g_window.mouse_pos
             cur_x += CURSOR_OFFSET_X
@@ -112,6 +117,7 @@ class Game(Widget):
 
                 self.vertices[c] = cur_x
                 self.vertices[c + 1] = cur_y
+        '''
 
         if self.animate:
             for i in self.animate.copy():
@@ -133,11 +139,14 @@ class Game(Widget):
             Clock.unschedule(self.update_glsl)
 
         self.canvas.clear()
-        self.canvas.before.add(select_blend_func)
+
+        if self.blending_is_broken:
+            self.canvas.before.add(select_blend_func)
+            self.canvas.after.add(reset_blend_func)
+
         self.canvas.add(Mesh(indices=self.indices, vertices=self.vertices,
                              fmt=VERTEX_FORMAT, mode='triangles',
                              texture=self.tex))
-        self.canvas.after.add(reset_blend_func)
 
     def set_root_note(self, root_note):
         self.root_note = root_note

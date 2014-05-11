@@ -11,6 +11,12 @@ PATH = realpath(path_join(dirname(__file__), '..', 'media'))
 Quad = namedtuple('Quad', 'x y size tex')
 
 
+def blending_is_broken():
+    # https://github.com/kivy/kivy/issues/2182
+    test = Image(path_join(PATH, 'test.png')).texture
+    return ord(test.pixels[0]) < 240
+
+
 def load_tex_uv(atlas_name):
     with open(path_join(PATH, atlas_name), 'rb') as istream:
         atlas_obj = json.load(istream)
