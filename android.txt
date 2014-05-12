@@ -1,0 +1,3 @@
+title=Rockivy
+author=Mark Vasilkov
+orientation=landscape

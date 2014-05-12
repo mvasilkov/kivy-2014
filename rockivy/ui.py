@@ -1,6 +1,6 @@
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
-from kivy.utils import get_color_from_hex
+from kivy.utils import get_color_from_hex, platform
 
 from .radiobtn import Radio
 from .scales import SCALES
@@ -8,8 +8,10 @@ from .tuning import NOTES, TUNING
 
 PADDING = 4
 HEIGHT = 40
+
 HEADING_COLOR = get_color_from_hex('#4b4d49')
 LABEL_COLOR = get_color_from_hex('#2e3436')
+
 LABEL_SIZE = 110
 
 
@@ -121,6 +123,18 @@ def init_ui(game):
     _tuning(game, view)
 
     view.add_widget(game)
+
+    if platform == 'android':
+        from kivy.core.window import Window
+        from kivy.uix.scrollview import ScrollView
+
+        app_view = view
+        app_view.size = (960, 540)
+        app_view.size_hint = (None, None)
+
+        view = ScrollView(size=Window.size)
+        view.add_widget(app_view)
+
     return view
 
 CURSOR = (
@@ -152,12 +166,11 @@ CURSOR = (
 
 
 def pygame_set_cursor():
-    from platform import system
     from pygame import cursors, mouse
 
     kwargs = dict(black='@', white='-', xor='$')
 
-    if system() == 'Windows':
+    if platform == 'win':
         # https://bitbucket.org/pygame/pygame/issue/200
         kwargs['black'], kwargs['white'] = kwargs['white'], kwargs['black']
 

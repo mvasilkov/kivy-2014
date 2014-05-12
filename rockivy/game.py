@@ -44,7 +44,8 @@ class Game(Widget):
     REPLACE_CURSOR = False
 
     def __init__(self, **kwargs):
-        self.canvas = RenderContext(use_parent_projection=True)
+        self.canvas = RenderContext(use_parent_modelview=True,
+                                    use_parent_projection=True)
         self.canvas.shader.source = resource_find('game.glsl')
 
         Widget.__init__(self, **kwargs)
