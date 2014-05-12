@@ -34,6 +34,7 @@ class Radio(ToggleButton):
         if kwargs['group'] == 'notes':
             kwargs['font_name'] = 'DroidSans-Regular.ttf'
 
+        kwargs['font_size'] = 15
         kwargs['markup'] = False
 
         self.rel = kwargs['rel']

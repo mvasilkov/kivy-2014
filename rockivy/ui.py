@@ -1,3 +1,4 @@
+from kivy.effects.scroll import ScrollEffect
 from kivy.uix.label import Label
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
@@ -20,8 +21,8 @@ ANIM_TOGGLE_SIZE = 170
 def _heading(game, view):
     heading = Label(font_name='DroidSans-Regular.ttf', font_size=18,
                     color=HEADING_COLOR, markup=False)
-    heading.pos = (PADDING, 500 - PADDING)
-    heading.size = (960 - PADDING * 2, HEIGHT)
+    heading.pos = (ANIM_TOGGLE_SIZE, 500 - PADDING)
+    heading.size = (960 - ANIM_TOGGLE_SIZE * 2, HEIGHT)
     view.add_widget(heading)
 
     def state_change(btn, state):
@@ -32,7 +33,7 @@ def _heading(game, view):
                                border=(0, 0, 0, 20), font_size=15,
                                text='Display Animations', state='down',
                                color=HEADING_COLOR, markup=False)
-    anim_toggle.pos = (960 - ANIM_TOGGLE_SIZE + 5, 510 - PADDING)
+    anim_toggle.pos = (965 - ANIM_TOGGLE_SIZE, 510 - PADDING)
     anim_toggle.size = (ANIM_TOGGLE_SIZE, 30)
     anim_toggle.bind(state=state_change)
     view.add_widget(anim_toggle)
@@ -55,7 +56,8 @@ def _add_widgets(view, label, widgets, line, size):
 
 
 def _notes(game, view):
-    label = Label(text='Root Note', color=LABEL_COLOR, markup=False)
+    label = Label(text='Root Note', font_size=15, color=LABEL_COLOR,
+                  markup=False)
     widgets = []
 
     def state_change(btn, state):
@@ -80,7 +82,8 @@ def _notes(game, view):
 
 
 def _scales(game, view):
-    label = Label(text='Scale', color=LABEL_COLOR, markup=False)
+    label = Label(text='Scale', font_size=15, color=LABEL_COLOR,
+                  markup=False)
     widgets = []
 
     def state_change(btn, state):
@@ -105,7 +108,8 @@ def _scales(game, view):
 
 
 def _tuning(game, view):
-    label = Label(text='Tuning', color=LABEL_COLOR, markup=False)
+    label = Label(text='Tuning', font_size=15, color=LABEL_COLOR,
+                  markup=False)
     widgets = []
 
     def state_change(btn, state):
@@ -139,7 +143,7 @@ def init_ui(game):
 
     view.add_widget(game)
 
-    if platform == 'android':
+    if platform in ('android', 'ios'):
         from kivy.core.window import Window
         from kivy.uix.scrollview import ScrollView
 
@@ -148,6 +152,7 @@ def init_ui(game):
         app_view.size_hint = (None, None)
 
         view = ScrollView(size=Window.size)
+        view.effect_cls = ScrollEffect
         view.add_widget(app_view)
 
     return view
