@@ -165,14 +165,32 @@ CURSOR = (
 )
 
 
+def compile_cursor(black='@', white='-'):
+    aa, bb = [], []
+    a = b = 0
+    i = 010
+    for s in CURSOR:
+        for c in s:
+            a <<= 1
+            b <<= 1
+            i -= 1
+            if c == black:
+                a |= 1
+                b |= 1
+            elif c == white:
+                b |= 1
+
+            if not i:
+                aa.append(a)
+                bb.append(b)
+                a = b = 0
+                i = 010
+
+    return tuple(aa), tuple(bb)
+
+
 def pygame_set_cursor():
-    from pygame import cursors, mouse
+    from pygame import mouse
 
-    kwargs = dict(black='@', white='-', xor='$')
-
-    if platform == 'win':
-        # https://bitbucket.org/pygame/pygame/issue/200
-        kwargs['black'], kwargs['white'] = kwargs['white'], kwargs['black']
-
-    a, b = cursors.compile(CURSOR, **kwargs)
+    a, b = compile_cursor()
     mouse.set_cursor((24, 24), (0, 0), a, b)
