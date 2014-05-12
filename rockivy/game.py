@@ -6,7 +6,7 @@ from kivy.graphics.opengl import (glBlendFunc,
 from kivy.resources import resource_find
 from kivy.uix.widget import Widget
 
-from .fretboard import update_tex_uv, build_fretboard
+from .fretboard import update_tex_uv, build_fretboard, set_ani
 from .scales import SCALES
 from .tuning import NOTES, TUNING_DEFAULT
 from .util import Quad, load_tex_uv, blending_is_broken
@@ -169,3 +169,5 @@ class Game(Widget):
         if self._heading:
             self._heading.text = u'%s \u2013 %s tuning' % (unicode(self.scale),
                                                            self.tuning['name'])
+
+    set_animooted = lambda self, val: set_ani(val)

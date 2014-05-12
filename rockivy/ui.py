@@ -1,4 +1,5 @@
 from kivy.uix.label import Label
+from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
 from kivy.utils import get_color_from_hex, platform
 
@@ -13,6 +14,7 @@ HEADING_COLOR = get_color_from_hex('#4b4d49')
 LABEL_COLOR = get_color_from_hex('#2e3436')
 
 LABEL_SIZE = 110
+ANIM_TOGGLE_SIZE = 170
 
 
 def _heading(game, view):
@@ -21,6 +23,19 @@ def _heading(game, view):
     heading.pos = (PADDING, 500 - PADDING)
     heading.size = (960 - PADDING * 2, HEIGHT)
     view.add_widget(heading)
+
+    def state_change(btn, state):
+        game.set_animooted(state == 'down')
+
+    anim_toggle = ToggleButton(background_normal='media/chkbox.png',
+                               background_down='media/chkbox_a.png',
+                               border=(0, 0, 0, 20), font_size=15,
+                               text='Display Animations', state='down',
+                               color=HEADING_COLOR, markup=False)
+    anim_toggle.pos = (960 - ANIM_TOGGLE_SIZE + 5, 510 - PADDING)
+    anim_toggle.size = (ANIM_TOGGLE_SIZE, 30)
+    anim_toggle.bind(state=state_change)
+    view.add_widget(anim_toggle)
 
     game._heading = heading
     game.update_heading()

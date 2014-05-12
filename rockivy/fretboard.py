@@ -16,6 +16,13 @@ LEGEND_OFFSET_Y = 25
 FB_LEFT = (960 - STRING_LENGTH) * 0.5 + LEGEND_OFFSET_X * 0.5 + 5
 FB_BOTTOM = (540 - FRET_LENGTH) * 0.5 + LEGEND_OFFSET_Y + 40
 
+g_animooted = True
+
+
+def set_ani(val):
+    global g_animooted
+    g_animooted = val
+
 
 def update_tex_uv(tex_uv):
     tex_uv['fret'] = mutate(tex_uv['fret'], {5: FRET_LENGTH * 0.5})
@@ -57,7 +64,8 @@ def _tuning(notes, scale_notes, root_note):
                        size=1, tex='tun_%s' % notes[c])
                   for c in xrange(STRING_COUNT)]
 
-_sz = lambda c: (FRET_COUNT - c) / (FRET_COUNT * 10.0)
+_sz = lambda c: ((FRET_COUNT - c) / (FRET_COUNT * 10.0)
+                 if g_animooted else 1)
 
 
 def _notes(string, notes, scale_notes, root_note):
