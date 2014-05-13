@@ -3,6 +3,10 @@ Rockivy
 =======
 [Rockivy][1] is an app for learning guitar scales, written in Python.
 
+![](https://raw.githubusercontent.com/mvasilkov/kivy-2014/master/Rockivy.png)
+
+Attention: Rockivy is not a synthesizer. Learning to play guitar requires, at the very least, a guitar.
+
 [1]: https://github.com/mvasilkov/kivy-2014
 
 Requirements
@@ -10,17 +14,29 @@ Requirements
 * Python 2.7
 * Kivy 1.8
 
+Supported operating systems
+---------------------------
+Same as Kivy: Mac OS X, Linux, Windows, Android, iOS.
+
 Setup
 -----
 Please refer to http://kivy.org for Kivy installation instructions.
 
+Android: get [Kivy Launcher][4] from the Google Play.
+
+[4]: https://play.google.com/store/apps/details?id=org.kivy.pygame
+
 Usage
 -----
+Clone [the repository][5] and launch `main.py` program using Kivy-aware Python.
+
 Assuming bash or similar shell:
 
     git clone https://github.com/mvasilkov/kivy-2014.git rockivy
     cd rockivy
     $(which kivy||which python) main.py
+
+[5]: https://github.com/mvasilkov/kivy-2014.git
 
 License
 -------
