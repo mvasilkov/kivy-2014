@@ -14,10 +14,6 @@ Requirements
 * Python 2.7
 * Kivy 1.8
 
-Supported operating systems
----------------------------
-Same as Kivy: Mac OS X, Linux, Windows, Android, iOS.
-
 Setup
 -----
 Please refer to http://kivy.org for Kivy installation instructions.
@@ -28,7 +24,7 @@ Android: get [Kivy Launcher][4] from the Google Play.
 
 Usage
 -----
-Clone [the repository][5] and launch `main.py` program using Kivy-aware Python.
+Clone [the repository][5] and run **main.py** with Kivy-aware Python.
 
 Assuming bash or similar shell:
 
@@ -37,6 +33,14 @@ Assuming bash or similar shell:
     $(which kivy||which python) main.py
 
 [5]: https://github.com/mvasilkov/kivy-2014.git
+
+Supported operating systems
+---------------------------
+* OS X
+* Linux
+* Windows
+* Android
+* iOS (tentative)
 
 License
 -------
