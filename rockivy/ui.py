@@ -188,7 +188,7 @@ CURSOR = (
 def compile_cursor(black='@', white='-'):
     aa, bb = [], []
     a = b = 0
-    i = 010
+    i = 8
     for s in CURSOR:
         for c in s:
             a <<= 1
@@ -204,7 +204,7 @@ def compile_cursor(black='@', white='-'):
                 aa.append(a)
                 bb.append(b)
                 a = b = 0
-                i = 010
+                i = 8
 
     return tuple(aa), tuple(bb)
 

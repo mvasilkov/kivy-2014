@@ -15,15 +15,21 @@ CURSOR_OFFSET_X = 16
 CURSOR_OFFSET_Y = -16
 
 VERTEX_FORMAT = (
-    ('vCenter', 2, 'float'),
-    ('vScale', 1, 'float'),
-    ('vPosition', 2, 'float'),
-    ('vTexCoords0', 2, 'float'),
+    (b'vCenter', 2, 'float'),
+    (b'vScale', 1, 'float'),
+    (b'vPosition', 2, 'float'),
+    (b'vTexCoords0', 2, 'float'),
 )
 
 VERTEX_SIZE = 7
 
 g_window = None
+
+try:
+    _test = unicode('')
+    del _test
+except NameError:
+    unicode = lambda a: a.__unicode__()
 
 
 @Callback
@@ -74,7 +80,7 @@ class Game(Widget):
 
         self.indices = []
         ix = self.indices.extend
-        for c in xrange(0, len(fretboard) << 2, 4):
+        for c in range(0, len(fretboard) << 2, 4):
             ix((c, c + 1, c + 2, c + 2, c + 3, c))
 
         self.vertices = []

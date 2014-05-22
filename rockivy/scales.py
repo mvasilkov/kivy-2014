@@ -9,7 +9,7 @@ def get_notes(root_note, size):
     notes = get_seq(root_note)
     res = [root_note]
     for sz in size:
-        for c in xrange(sz):
+        for c in range(sz):
             next(notes)
         res.append(next(notes))
     return res

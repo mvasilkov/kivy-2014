@@ -18,6 +18,12 @@ FB_BOTTOM = (540 - FRET_LENGTH) * 0.5 + LEGEND_OFFSET_Y + 40
 
 g_animooted = True
 
+try:
+    _test = xrange(0)
+    del _test
+except NameError:
+    xrange = range
+
 
 def set_ani(val):
     global g_animooted
